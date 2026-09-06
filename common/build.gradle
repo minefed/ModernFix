@@ -14,12 +14,6 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:${rootProject.mixinextras_version}"))
 
-    modCompileOnly("dev.latvian.mods:kubejs:${kubejs_version}") {
-        transitive = false
-    }
-    modApi("dev.latvian.mods:rhino:${rhino_version}") {
-        transitive = false
-    }
     modApi("me.shedaniel:RoughlyEnoughItems-api:${rei_version}") {
         transitive = false
     }
