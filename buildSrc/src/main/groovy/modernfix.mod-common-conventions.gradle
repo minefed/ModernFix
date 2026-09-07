@@ -31,8 +31,13 @@ tasks {
 }
 
 tasks.withType(JavaCompile) {
-    options.fork = true
-    options.forkOptions.jvmArgs << '--enable-preview'
+    // In-process compilation avoids worker argfile encoding issues on Windows.
+    // With this opt-in, add --enable-preview to org.gradle.jvmargs for our processor.
+    options.fork = !providers.gradleProperty('minefedInProcessCompiler')
+            .map { it.toBoolean() }.getOrElse(false)
+    if (options.fork) {
+        options.forkOptions.jvmArgs << '--enable-preview'
+    }
     configure(options) {
         if (!name.toLowerCase().contains('test')) {
         options.compilerArgs << "-ArootProject.name=${rootProject.name}" << "-Aproject.name=${project.name}"
